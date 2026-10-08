@@ -7,7 +7,7 @@ Arxiv version of paper: https://arxiv.org/abs/2608.02757
 
 By Aaron Boley
 
-License: https://creativecommons.org/licenses/by-sa/4.0/deed.en
+License: MIT (see LICENSE file)
 
 Repo: https://github.com/norabolig/odc_sky_impacts
 
