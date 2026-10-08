@@ -26,7 +26,8 @@ LATPLOT=30                                  # latitude of interest
 SUNLIT=1                                    #  include only sunlit satellites
 TITLE= "Sunrise ODC, DS, 30˚N, 6 p.m."      # what you want your title to be
 outfile="sunrise_ODC_ds_30_6pm"             # output nominclature
-earthOverviewName="sunrise_Earth_map.png"  # globe output name. See globe controls below
+earthOverviewName="sunrise_Earth_map.png"   # globe output name. See globe controls below
+CBAR_FILE_NAME="sunrise_cb.png"
 phase_of_year = 0                           # 0 places everything at the December solsice. pi/2 is March equinox
                                             # pi is June solstice, 3pi/2 is September equinox
 
@@ -34,6 +35,13 @@ SUNSYNC_LIMIT = 90   # adjust sunsynchronous for precession. Set to unrealistic 
 OVAR= 0              # variation of nodes in degrees, relative to centre set by OMEGA_0 (ODC specific)
                       
 VERBOSE=False           # if you want a lot of output
+
+ALTMIN_CBAR=500.             # minimum colourbar
+ALTMAX_CBAR=1800.            # max colourbar
+CB_SELF_ADJUST=True          # Ignore min and max altitude and plot based on distribution
+ADD_COLORBAR=False           # plot the colourbar
+MAKE_SEPARATE_COLORBAR =True # make separate colorbar
+CMAP = "plasma"              # cmap for colourbar
 
 #
 ########################################################################
@@ -870,18 +878,29 @@ visible_alts = calculated_altitudes[sat_visible]
 sorted_indices = np.argsort(visible_zp)
 
 # Scatter plot the remaining foreground satellites
+if CB_SELF_ADJUST==True:
+    ALTMIN_CBAR=visible_alts.min()
+    ALTMAX_CBAR=visible_alts.max()
+    
 scatter = ax.scatter(
     visible_xp[sorted_indices],
     visible_yp[sorted_indices],
     #c="red",
     c=visible_alts[sorted_indices],
-    cmap="plasma",
+    cmap=CMAP,
     s=20,
+    vmin=ALTMIN_CBAR,vmax=ALTMAX_CBAR,
     edgecolor="black",
-    linewidth=0.2,
+    linewidth=0.1,
     zorder=3
 )
 
+if ADD_COLORBAR==True:
+    from mpl_toolkits.axes_grid1 import make_axes_locatable
+    section = make_axes_locatable(ax)
+    cax = section.append_axes("right",size="3%",pad=0.1)
+    fig.colorbar(scatter,cax=cax,label="Altitude [km]")#,orientation="horizontal")
+    
 # Figure Formatting
 max_view_range = 9000
 ax.set_xlim(-max_view_range, max_view_range)
@@ -889,6 +908,18 @@ ax.set_ylim(-max_view_range, max_view_range)
 ax.set_aspect('equal')
 ax.axis('off')
 plt.savefig(earthOverviewName)
+    
+if MAKE_SEPARATE_COLORBAR==True:
+    import matplotlib.colors as mcolors
+    import matplotlib.cm as cm
+    fig,ax=plt.subplots(figsize=(6,1))
+    norm = mcolors.Normalize(vmin=ALTMIN_CBAR,vmax=ALTMAX_CBAR)
+    mappable = cm.ScalarMappable(norm=norm,cmap=CMAP)
+    cbar=fig.colorbar(mappable,cax=ax,orientation="horizontal")
+    cbar.ax.tick_params(labelsize=14)
+    cbar.set_label('Altitutde [km]',size=14)
+    plt.tight_layout()
+    plt.savefig(CBAR_FILE_NAME)
 
 
 plt.show()
