@@ -3,10 +3,12 @@
 Scripts for making figures of sky impacts of satellite systems.
 
 This particular shows scripts used for making figures in Boley, Lawler, and Rein 2026 (DOI to be added).
+Arxiv version of paper: https://arxiv.org/abs/2608.02757
 
 By Aaron Boley
 
 License: https://creativecommons.org/licenses/by-sa/4.0/deed.en
+
 Repo: https://github.com/norabolig/odc_sky_impacts
 
 ## Scripts
@@ -20,7 +22,5 @@ Sunrise, SpaceX ODC, and Stampede are all available.
 ## Figures
 
 In the figs directory, figures used in the Boley, Lalwer, and Rein paper can be found, as well as additional plots produced by thesats-in-sky.py script.
-
-
 
 
