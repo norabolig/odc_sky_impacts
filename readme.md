@@ -2,7 +2,7 @@
 
 Scripts for making figures of sky impacts of satellite systems.
 
-This particular shows scripts used for making figures in Boley, Lawler, and Rein 2026 (DOI to be added).
+This particular shows scripts used for making figures in Boley, Lawler, and Rein 2026, AJ.
 Arxiv version of paper: https://arxiv.org/abs/2608.02757
 
 By Aaron Boley
