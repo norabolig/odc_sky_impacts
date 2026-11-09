@@ -2,7 +2,7 @@
 # A.C. Boley (Norabolig)
 ########################################################################
 # 
-# cc-by-sa 4.0
+# MIT License 
 #
 # If used for publication, please cite Boley, Lawler, and Rein et al. 2026 (full DOI coming)
 # Produces the time of day plots used in the paper
